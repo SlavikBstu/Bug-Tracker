@@ -1,0 +1,38 @@
+﻿@model CaptchaMvc.Models.DefaultBuildInfoModel
+<div class="row">
+    <div class="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+        @Html.Hidden(Model.TokenElementId, Model.TokenValue)
+        @{
+            string id = Guid.NewGuid().ToString("N");
+            string functionName = string.Format("______{0}________()", Guid.NewGuid().ToString("N"));
+            <script type="text/javascript">
+                $(function () {
+                    $('#@id').show();
+                });
+
+                function @functionName {
+                    $('#@id').hide();
+                    var t = $('#@Model.TokenElementId').val();
+                    $.post("@Model.RefreshUrl", { @Model.TokenParameterName: t},
+                        function() {
+                            $('#@id').show();
+                        });
+                    return false;
+                };
+            </script>
+            <a href="#@Model.InputElementId" id="@id" onclick="@functionName" style="display: none;"><img id="@Model.ImageElementId" src="@Model.ImageUrl" alt="ImageCaptcha" title="Щёлкните, чтобы обновить код" class="thumbnail img-responsive" /></a>
+        }
+    </div>
+    <div class="col-md-9 col-sm-9 col-lg-9 col-xs-9">
+            @if (Model.IsRequired)
+            {
+                @Html.TextBox(Model.InputElementId, null, new Dictionary<string, object> { { "data-val", "true" }, { "data-val-required", Model.RequiredMessage } })
+
+            }
+            else
+            {
+                @Html.TextBox(Model.InputElementId, null, new { @class = "form-control", placeholder = "Введите код с картинки" })
+            }
+        <span class="field-validation-error" id="captcha_val_result"></span>
+    </div>
+</div>

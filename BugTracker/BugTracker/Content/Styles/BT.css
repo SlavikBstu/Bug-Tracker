@@ -145,3 +145,6 @@ span.status {
 .captcha-icons a:first-child {
   margin-bottom: 6px;
 }
+option[disabled] {
+  color: forestgreen;
+}

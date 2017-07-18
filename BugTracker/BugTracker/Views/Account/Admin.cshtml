@@ -4,28 +4,29 @@
 
 @model IEnumerable<UserViewModel>
 
-@helper CustomRenderingOfRole(ApplicationUser user)
+@helper CustomRenderingOfRole(string id)
 {
-@Html.DropDownListFor(role => user.Roles,
-                       new SelectList(Enum.GetNames(typeof(UserRoles))),
-                       new Dictionary<string, object>() {{"class", "form-control input-sm" } })
+    <select name="user-role-select" size="1" data-user-id="@id" class = "form-control input-sm">
+        <option disabled selected>Выбрать роль</option>
+        <option value="1">Модератор</option>
+        <option value="2">Сотрудник</option>
+        <option value="3">Пользователь</option>
+    </select>
 }
-
-
 @{
     ViewBag.Title = "Панель администратора";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="panel  panel-primary" style="margin-top: 70px;">
+<div class="panel panel-primary" style="margin-top: 70px;">
     <div class="panel-heading  form-heading-text">
-          <i class="fa fa-list-alt fa-fw" aria-hidden="true"></i>
-           &nbsp;&nbsp;Неразрешённые пользователи
-           <a href="#" class="btn btn-success pull-right" role="button">
-               <i class="fa fa-plus-square fa-fw" aria-hidden="true"></i>&nbsp;Добавить
-           </a>
+        <i class="fa fa-list-alt fa-fw" aria-hidden="true"></i>
+        &nbsp;&nbsp;Неразрешённые пользователи
+        @*<a href="#" class="btn btn-success pull-right" role="button">
+                <i class="fa fa-plus-square fa-fw" aria-hidden="true"></i>&nbsp;Добавить
+            </a>*@
     </div>
-        @Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
+    @Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
    {
        columns.Add(user => user.Email).Titled("Электронная почта");
        columns.Add(user => user.LastName)
@@ -34,22 +35,20 @@
                                          .Filterable(true)
                                          .SortInitialDirection(GridSortDirection.Ascending)
                                          .RenderValueAs(user => user.FirstName + " " + user.LastName);
-       //columns.Add()
-       //                            .Titled("Роль")
-       //                            .Encoded(false)
-       //                            .Sanitized(false)
-       //                            .RenderValueAs(user => CustomRenderingOfRole(user));
-
+       columns.Add().Titled("Роль")
+                    .Encoded(false)
+                    .Sanitized(false)
+                    .RenderValueAs(user => CustomRenderingOfRole(user.Id));
    }).WithPaging(3)
 </div>
 
-    <div class="right-sidebar moveHide" id="right-sidebar">
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" class="active"><a href="GridView"><i class='fa fa-window-close fa-2x' aria-hidden='true'></i><div>Неразрешённые пользователи</div></a></li>
-            <li role="presentation"><a href="TaskList"><i class='fa fa-tasks fa-2x' aria-hidden='true'></i><div>Список заявок</div></a></li>
-            <li role="presentation"><a href="GridView"><i class='fa fa-clock-o fa-2x' aria-hidden='true'></i><div>Необработанные заявки</div></a></li>
-        </ul>
-    </div>
+<div class="right-sidebar moveHide" id="right-sidebar">
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="active"><a href="GridView"><i class='fa fa-window-close fa-2x' aria-hidden='true'></i><div>Неразрешённые пользователи</div></a></li>
+        <li role="presentation"><a href="TaskList"><i class='fa fa-tasks fa-2x' aria-hidden='true'></i><div>Список заявок</div></a></li>
+        <li role="presentation"><a href="GridView"><i class='fa fa-clock-o fa-2x' aria-hidden='true'></i><div>Необработанные заявки</div></a></li>
+    </ul>
+</div>
 
 <a href="#" title="Наверх" class="scroll scrollup"></a>
 <a href="#" title="Вниз" class="scroll scrolldown"></a>

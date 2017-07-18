@@ -68,6 +68,13 @@ namespace BugTracker.Controllers
             return View(users);
         }
 
+        [HttpPost]
+        public string AllowUser(string userId, string roleId)
+        {
+            // изменить
+            return userId + " " + roleId;
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]

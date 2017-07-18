@@ -20,6 +20,26 @@ $(document).ready(function () {
         $("#right-sidebar").toggleClass("moveHide moveShow");
     });
 
+
+    //-------------------- DropDawnListRole -------------------------
+    $("body").on("change", "select[name='user-role-select']", function (e) {
+        var data = {
+            userId: $(this).attr("data-user-id"),
+            roleId: $(this).val()
+        };
+            jQuery.ajax("AllowUser", {
+                type: "POST",
+                dataType: "text",
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    if ("True" == result) {
+                    }
+                }
+        });
+        e.stopPropagation();
+    });
+
 });
 
 

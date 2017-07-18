@@ -10,7 +10,7 @@
     margin: @margin-logo-image;
 }
 
-a, .btn{
+a, .btn {
     transition: all .3s;
 }
 
@@ -21,4 +21,178 @@ a, .btn{
 
 .horizontal-center {
     text-align: center;
+}
+
+.field-validation-error {
+    color: #b94a48;
+    font-style: italic;
+}
+
+
+/*======================== GridViewMvc =========================*/
+.grid-mvc {
+
+    TABLE {
+        border-collapse: collapse;
+
+        TD, TH {
+            border: 1px solid #adaaaa;
+
+            &:first-child, &:last-child {
+                border-left: none;
+                border-right: none;
+            }
+        }
+    }
+
+
+    thead {
+        background-color: @color-header-footer-table;
+    }
+
+    tbody, .grid-footer {
+        padding: 0 7px;
+    }
+
+
+
+    .pagination {
+        margin: 5px 0;
+
+        & > li {
+            &:last-child {
+                & > span, & > a {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+            }
+
+            &:first-child {
+                & > span, & > a {
+                    border-bottom-left-radius: 0;
+                    border-top-left-radius: 0;
+                }
+            }
+        }
+    }
+
+    .grid-cell {
+        vertical-align: middle;
+
+        select {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+    }
+
+    .grid-footer {
+        background-color: @color-header-footer-table;
+    }
+}
+
+
+
+
+.scroll {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+    position: fixed;
+    right: 1%;
+    display: none;
+    text-indent: -9999px;
+}
+
+.scrollup {
+    background: url(../Images/icon_top.png) no-repeat;
+    bottom: 120px;
+}
+
+.scrolldown {
+    background: url(../Images/icon_bottom.png) no-repeat;
+    bottom: 70px;
+}
+
+.content-container {
+    width: 86%;
+    margin-left: 0;
+    margin-right: 14%;
+    padding: 0 15px;
+}
+
+.right-sidebar {
+    position: fixed;
+    top: 51px;
+    background-color: @bg-color-right-sidebar;
+    right: 0;
+    border-left: 2px solid @color-blue;
+    width: 14%;
+
+    li {
+        border-top: 2px solid #bdbdbd;
+
+        &:first-child {
+            border-top: none;
+        }
+
+        a {
+            border-radius: 0;
+            text-align: center;
+            color: #000000;
+        }
+    }
+
+    transition: all .3s;
+}
+
+#menu_gear {
+    display: none;
+}
+
+
+
+
+@media (max-width: @screen-xs-max) {
+    .moveShow {
+        right: 0;
+    }
+
+    .moveHide {
+        right: -14%;
+    }
+
+    .content-container {
+        width: 100%;
+        margin: 0;
+        padding: 0 15px;
+    }
+
+    #menu_gear {
+        display: block;
+
+        span {
+            vertical-align: 5%;
+        }
+    }
+}
+
+
+
+
+/*==================== BotDetect Captcha styles ==========================*/
+
+span.status {
+    color: #333;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.captcha-icons {
+    position: relative;
+    top: -60px;
+    left: 225px;
+
+    a:first-child {
+        margin-bottom: 6px;
+    }
 }

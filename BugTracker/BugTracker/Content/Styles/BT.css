@@ -131,3 +131,17 @@ a,
     vertical-align: 5%;
   }
 }
+/*==================== BotDetect Captcha styles ==========================*/
+span.status {
+  color: #333;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.captcha-icons {
+  position: relative;
+  top: -60px;
+  left: 225px;
+}
+.captcha-icons a:first-child {
+  margin-bottom: 6px;
+}

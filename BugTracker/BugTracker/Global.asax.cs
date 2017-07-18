@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using CaptchaMvc.Infrastructure;
 
 namespace BugTracker
 {
@@ -13,8 +12,6 @@ namespace BugTracker
     {
         protected void Application_Start()
         {
-            CaptchaUtils.CaptchaManager.StorageProvider = new SessionStorageProvider();
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -44,11 +44,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CaptchaMvc">
-      <HintPath>..\packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
+    <Reference Include="BotDetect">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Captcha Inc\BotDetect 4 CAPTCHA Component\Asp.Net\.NET4.5\BotDetect.dll</HintPath>
     </Reference>
-    <Reference Include="GridMvc">
-      <HintPath>..\packages\grid.mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+    <Reference Include="BotDetect.Web.Mvc">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Captcha Inc\BotDetect 4 CAPTCHA Component\Asp.Net\.NET4.5\BotDetect.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -223,7 +223,12 @@
   <ItemGroup>
     <Content Include="Content\Images\icon_bottom.png" />
     <Content Include="Content\Images\icon_top.png" />
-    <Content Include="Content\Styles\BT.css" />
+    <Content Include="Content\Styles\BT.css">
+      <DependentUpon>BT.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\BT.min.css">
+      <DependentUpon>BT.css</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\font-awesome\font-awesome.css" />
     <Content Include="Content\Styles\font-awesome\font-awesome.min.css" />
     <Content Include="Content\Styles\Gridmvc.css" />
@@ -260,7 +265,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Styles\variables.less" />
+    <Content Include="Content\Styles\BT.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CheckCaptcha.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js" />

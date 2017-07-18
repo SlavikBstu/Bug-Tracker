@@ -4,13 +4,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using CaptchaMvc.HtmlHelpers;
-using CaptchaMvc.Infrastructure;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTracker.Models;
+using BotDetect.Web;
 
 namespace BugTracker.Controllers
 {
@@ -151,17 +150,11 @@ namespace BugTracker.Controllers
             }
         }
 
-        public string CheckCaptcha()
+        [AllowAnonymous]
+        public string CheckCaptcha(string captchaId, string instanceId, string userInput)
         {
-            string inputUser = Request.QueryString["userInput"].ToUpper(), token = Request.QueryString["token"];
-            var valueCaptcha = CaptchaUtils.CaptchaManager.StorageProvider.GetValue(token, CaptchaMvc.Interface.TokenType.Validation);
-            if (valueCaptcha != null)
-                Session["ValueCaptcha"] = valueCaptcha.CaptchaText;
-            if (Session["ValueCaptcha"] != null)
-            {
-                if (string.Compare(Session["ValueCaptcha"].ToString(), inputUser, true) == 0) return "valid";
-            }
-            return "Вы ввели код неверно";
+            bool ajaxValidationResult = Captcha.AjaxValidate(captchaId, userInput, instanceId);
+            return ajaxValidationResult.ToString();
         }
 
         //

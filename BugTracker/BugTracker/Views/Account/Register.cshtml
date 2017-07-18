@@ -1,5 +1,5 @@
 ﻿@model BugTracker.Models.RegisterViewModel
-@using CaptchaMvc.HtmlHelpers
+@using BotDetect.Web.Mvc
 @{
     Layout = "~/Views/Shared/_signIn_signUp.cshtml";
     ViewBag.Title = "Регистрация";
@@ -10,7 +10,7 @@
         <div class="panel panel-default">
             <div class="panel-heading horizontal-center"><span class="form-heading-text"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;Регистрация</span></div>
             <div class="panel-body form-container">
-                @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registrationForm" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -49,13 +49,27 @@
                             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Фамилия" })
                             @Html.ValidationMessageFor(m => m.LastName)
                         </div>
-
-                        <div class="form-group">
-                            @Html.Captcha(5, "Captcha")
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
                 }
+
+                <div class="form-group">
+                    @{
+                        MvcCaptcha exampleCaptcha = new MvcCaptcha("ExampleCaptcha");
+                        exampleCaptcha.UserInputID = "CaptchaCode";
+                        exampleCaptcha.HelpLinkEnabled = false;
+                        exampleCaptcha.ReloadTooltip = "Обновить";
+                        exampleCaptcha.SoundTooltip = "Прослушать";
+                        exampleCaptcha.ImageSize = new System.Drawing.Size(220, 60);
+                        exampleCaptcha.AutoFocusInput = false;
+                        exampleCaptcha.SoundStyle = BotDetect.SoundStyle.Gun;
+                    }
+                    @Html.Captcha(exampleCaptcha)
+                </div>
+                <div class="form-group">
+                    @Html.TextBox("CaptchaCode", null, new { @class = "form-control", placeholder = "Введите код с картинки" })
+                    <span id="status"></span>
+                </div>
+                <script src="@Url.Content("~/Scripts/CheckCaptcha.js")"></script>
+                <button type="submit" class="btn btn-primary btn-block" form="registrationForm">Зарегистрироваться</button>
             </div>
             <div class="panel-footer form-heading-text">@Html.ActionLink("Войти в систему", "Login", "Account")</div>
         </div>

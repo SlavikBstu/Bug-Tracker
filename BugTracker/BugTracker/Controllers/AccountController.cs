@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTracker.Models;
 using BotDetect.Web;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BugTracker.Controllers
 {
@@ -63,16 +64,35 @@ namespace BugTracker.Controllers
                 Id = u.Id,
                 Email = u.Email,
                 FirstName = u.FirstName,
-                LastName = u.LastName
+                LastName = u.LastName,
+                Role = UserManager.GetRoles(u.Id).ToList().ToString()
             });
             return View(users);
         }
 
         [HttpPost]
-        public string AllowUser(string userId, string roleId)
+        public ActionResult Admin(string userId, string roleId)
         {
-            // изменить
-            return userId + " " + roleId;
+            var user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                user.Roles.Clear();
+                context.SaveChanges();
+                switch (roleId)
+                {
+                    case "1":
+                        UserManager.AddToRole(userId, "moderator");
+                        break;
+                    case "2":
+                        UserManager.AddToRole(userId, "worker");
+                        break;
+                    case "3":
+                        UserManager.AddToRole(userId, "user");
+                        break;
+                }
+
+            }
+            return null;
         }
 
         //

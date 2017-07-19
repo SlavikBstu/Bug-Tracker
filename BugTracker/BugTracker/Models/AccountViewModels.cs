@@ -72,8 +72,11 @@ namespace BugTracker.Models
         [Display(Name = "Имя пользователя")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Фамилия пользваотеля")]
+        [Display(Name = "Фамилия пользователя")]
         public string LastName { get; set; }
+
+        [Display(Name = "Роль")]
+        public string Role { get; set; }
     }
 
     public class RegisterViewModel
@@ -86,7 +89,7 @@ namespace BugTracker.Models
         [Display(Name = "Имя пользователя")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Фамилия пользваотеля")]
+        [Display(Name = "Фамилия пользователя")]
         public string LastName { get; set; }
 
         [Required]

@@ -11,7 +11,7 @@ namespace BugTracker.Models
 {
     public enum UserRoles
     {
-        moderator,
+        moderator = 1,
         worker,
         user
     };

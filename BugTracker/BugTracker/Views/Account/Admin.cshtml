@@ -4,13 +4,28 @@
 
 @model IEnumerable<UserViewModel>
 
-@helper CustomRenderingOfRole(string id)
+@helper CustomRenderingOfRole(UserViewModel user)
 {
-    <select name="user-role-select" size="1" data-user-id="@id" class = "form-control input-sm">
+    <select name="user-role-select" size="1" data-user-id="@user.Id" class="form-control input-sm">
         <option disabled selected>Выбрать роль</option>
-        <option value="1">Модератор</option>
-        <option value="2">Сотрудник</option>
-        <option value="3">Пользователь</option>
+        @{
+            string opt1 = string.Empty, opt2 = string.Empty, opt3 = string.Empty;
+            if (user.Role == "moderator")
+            {
+                opt1 = "selected";
+            }
+            else if (user.Role == "worker")
+            {
+                opt2 = "selected";
+            }
+            else if (user.Role == "user")
+            {
+                opt3 = "selected";
+            }
+        }
+        <option value="1" @opt1>Модератор</option>
+        <option value="2" @opt2>Сотрудник</option>
+        <option value="3" @opt3>Пользователь</option>
     </select>
 }
 @{
@@ -22,9 +37,7 @@
     <div class="panel-heading  form-heading-text">
         <i class="fa fa-list-alt fa-fw" aria-hidden="true"></i>
         &nbsp;&nbsp;Неразрешённые пользователи
-        @*<a href="#" class="btn btn-success pull-right" role="button">
-                <i class="fa fa-plus-square fa-fw" aria-hidden="true"></i>&nbsp;Добавить
-            </a>*@
+
     </div>
     @Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
    {
@@ -38,7 +51,7 @@
        columns.Add().Titled("Роль")
                     .Encoded(false)
                     .Sanitized(false)
-                    .RenderValueAs(user => CustomRenderingOfRole(user.Id));
+                    .RenderValueAs(user => CustomRenderingOfRole(user));
    }).WithPaging(3)
 </div>
 

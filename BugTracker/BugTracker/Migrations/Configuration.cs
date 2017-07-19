@@ -44,7 +44,6 @@ namespace BugTracker.Migrations
             {
                 // добавляем для пользователя роль
                 userManager.AddToRole(admin.Id, administrator_role.Name);
-                userManager.AddToRole(admin.Id, user_role.Name);
             }
 
             base.Seed(context);

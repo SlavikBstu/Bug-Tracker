@@ -27,7 +27,7 @@ $(document).ready(function () {
             userId: $(this).attr("data-user-id"),
             roleId: $(this).val()
         };
-            jQuery.ajax("AllowUser", {
+            jQuery.ajax("Admin", {
                 type: "POST",
                 dataType: "text",
                 data: data,

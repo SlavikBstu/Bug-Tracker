@@ -334,7 +334,17 @@ namespace BugTracker.Controllers
             base.Dispose(disposing);
         }
 
-#region Вспомогательные приложения
+        // GET: /Manage/SetPassword
+        public ActionResult CreateClaim(BugTracker.Models.DBClasses.Application app)
+        {
+            if(!ModelState.IsValid)
+                return View();
+
+            //... 
+            return View();
+        }
+
+        #region Вспомогательные приложения
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 
@@ -388,7 +398,7 @@ namespace BugTracker.Controllers
 #endregion
     }
 
-    internal class IndexViewModel
+    public class IndexViewModel
     {
         public bool BrowserRemembered { get; set; }
         public bool HasPassword { get; set; }

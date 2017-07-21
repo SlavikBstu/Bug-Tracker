@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -63,14 +64,27 @@ namespace BugTracker.Controllers
         {
             Application appl = new Application();
 
-
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            appl.us = user;
+            appl.us_id = User.Identity.GetUserId().ToString();
             appl.caption = app.Caption;
             appl.status = status_enum.initial;
             appl.type = app.Type;
             appl.priority = app.Priority;
             appl.annotation = app.Annotation;
+
+            //var picturePath = "";
+
+            //if (file != null/* && file.ContentLength > 0*/)
+            //{
+            //    string fileName = Path.GetFileName(file.FileName);
+            //    picturePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            //    var path = Path.Combine(Server.MapPath("~/ApplicationImages/" + fileName), picturePath);
+            //    file.SaveAs(path);
+            //    appl.picture = "~/ApplicationImages/" + fileName;
+            //}
+            //var count = Request.Files["upload"];
+
+            //https://stackoverflow.com/questions/16255882/uploading-displaying-images-in-mvc-4
+
             if (upload != null)
             {
                 // получаем имя файла 
@@ -79,6 +93,7 @@ namespace BugTracker.Controllers
                 upload.SaveAs(Server.MapPath("~/ApplicationImages/" + fileName));
                 appl.picture = "~/ApplicationImages/" + fileName;
             }
+
             if (ModelState.IsValid)
             {
                 context.Applications.Add(appl);
@@ -90,10 +105,30 @@ namespace BugTracker.Controllers
            
         }
 
-
+        [HttpGet]
         public ActionResult ListApplication()
         {
-            return View();
+            var dbApplications = context.Applications.ToList();
+            var applications = dbApplications.Select(a => new ApplicationViewModel
+            {
+                Caption = a.caption,
+                Annotation = a.annotation
+            });
+
+            return View(applications);
+        }
+
+        [HttpGet]
+        public ActionResult DetailsApplication(string _id_application)
+        {
+            var dbApplications = context.Applications.Select(app => u.id_application == _id_application);
+            var applications = dbApplications.Select(a => new ApplicationViewModel
+            {
+                Caption = a.caption,
+                Annotation = a.annotation
+            });
+
+            return View(applications);
         }
     }
 }

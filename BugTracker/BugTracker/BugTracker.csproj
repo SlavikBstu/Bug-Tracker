@@ -97,6 +97,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Entity.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -335,6 +336,7 @@
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\User\CreateApplication.cshtml" />
     <Content Include="Views\User\ListApplication.cshtml" />
+    <Content Include="Views\User\DetailsApplication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicationImages\" />

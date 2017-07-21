@@ -1,7 +1,7 @@
 ﻿@using GridMvc.Html
 @using GridMvc.Sorting
 @using BugTracker.Models
-@model IEnumerable<BugTracker.Models.DBClasses.Application>
+@model IEnumerable<ApplicationViewModel>
 
 @{
     ViewBag.Title = "Список заявок";
@@ -13,18 +13,15 @@
         <i class="fa fa-th-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Список заявок
     </div>
 
-@*@Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
+@Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
    {
-       columns.Add(user => user.Email).Titled("Электронная почта");
-       columns.Add(user => user.LastName)
-                                         .Titled("Пользователь")
+       columns.Add(application => application.Caption).Titled("Тема");
+       columns.Add(application => application.Annotation)
+                                         .Titled("Комментарий пользователя")
                                          .Sortable(true)
                                          .Filterable(true)
-                                         .SortInitialDirection(GridSortDirection.Ascending)
-                                         .RenderValueAs(user => user.FirstName + " " + user.LastName);
-       columns.Add().Titled("Роль")
-                    .Encoded(false)
-                    .Sanitized(false)
-                    .RenderValueAs(user => CustomRenderingOfRole(user));
-   }).WithPaging(3)*@
+                                         .SortInitialDirection(GridSortDirection.Ascending);
+                                        // .RenderValueAs(user => application);
+       //columns.Add(application => application.Type).Titled("Тип");
+   }).WithPaging(3)
 </div>

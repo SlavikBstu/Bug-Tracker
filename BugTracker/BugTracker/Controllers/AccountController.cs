@@ -61,7 +61,7 @@ namespace BugTracker.Controllers
         {
             var dbUsers = context.Users.ToList();
             dbUsers.Remove(dbUsers.Where(u => u.Email == "admin@mail.ru").First());
-            var s = UserManager.GetRoles(dbUsers.First().Id).ToList().First().ToString();
+            var s = UserManager.GetRoles(dbUsers.First().Id).ToList().FirstOrDefault().ToString();
             var users = dbUsers.Select(u => new UserViewModel {
                 Id = u.Id,
                 Email = u.Email,

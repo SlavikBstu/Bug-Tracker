@@ -19,6 +19,8 @@ namespace BugTracker.Models.DBClasses
 
         [Key]
         public int id_application { get; set; }
+        [ForeignKey("us")]
+        public string us_id { get; set; }
         public status_enum status { get; set; }
         public string caption { get; set; }
         public string type { get; set; }

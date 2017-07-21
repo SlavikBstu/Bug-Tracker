@@ -7,6 +7,7 @@ using BugTracker.Migrations;
 using BugTracker.Models.DBClasses;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Collections.Generic;
 
 namespace BugTracker.Models
 {
@@ -30,6 +31,8 @@ namespace BugTracker.Models
 
             return userIdentity;     
         }
+
+        public virtual List<Application> Applications { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

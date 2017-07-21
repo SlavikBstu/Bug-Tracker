@@ -14,6 +14,14 @@ namespace BugTracker.Controllers
     [Authorize]
     public class UserController : Controller
     {
+        private static List<string> imageMimeTypes = new List<string>()
+        {
+            "image/gif",
+            "image/jpeg",
+            "image/png",
+            "image/tiff"
+        };
+        
         ApplicationDbContext context = new ApplicationDbContext();
 
         private ApplicationSignInManager _signInManager;
@@ -60,10 +68,9 @@ namespace BugTracker.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateApplication(HttpPostedFileBase upload, ApplicationViewModel app)
+        public ActionResult CreateApplication(IEnumerable<HttpPostedFileBase> uploadImages, ApplicationViewModel app)
         {
             Application appl = new Application();
-
             appl.us_id = User.Identity.GetUserId().ToString();
             appl.caption = app.Caption;
             appl.status = status_enum.initial;
@@ -71,38 +78,28 @@ namespace BugTracker.Controllers
             appl.priority = app.Priority;
             appl.annotation = app.Annotation;
 
-            //var picturePath = "";
-
-            //if (file != null/* && file.ContentLength > 0*/)
-            //{
-            //    string fileName = Path.GetFileName(file.FileName);
-            //    picturePath = Guid.NewGuid() + Path.GetExtension(file.FileName);
-            //    var path = Path.Combine(Server.MapPath("~/ApplicationImages/" + fileName), picturePath);
-            //    file.SaveAs(path);
-            //    appl.picture = "~/ApplicationImages/" + fileName;
-            //}
-            //var count = Request.Files["upload"];
-
-            //https://stackoverflow.com/questions/16255882/uploading-displaying-images-in-mvc-4
-
-            if (upload != null)
+            string imgName = string.Empty, imgPath = imgName;
+            foreach (var img in uploadImages)
             {
-                // получаем имя файла 
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте 
-                upload.SaveAs(Server.MapPath("~/ApplicationImages/" + fileName));
-                appl.picture = "~/ApplicationImages/" + fileName;
+                if (img != null && imageMimeTypes.Contains(img.ContentType) && img.ContentLength > 0)
+                {
+                    imgName = Guid.NewGuid() + Path.GetExtension(img.FileName);
+                    img.SaveAs(Path.Combine(Server.MapPath("~/ApplicationImages"), imgName));
+                    imgPath = "~/ApplicationImages/" + imgName;
+                    if (appl.picture == null)
+                        appl.picture = imgPath;
+                    else
+                        appl.picture += "|" + imgPath;
+                }
             }
 
             if (ModelState.IsValid)
             {
                 context.Applications.Add(appl);
                 context.SaveChanges();
-                return Redirect("/User/ListApplication");
+                return RedirectToAction("ListApplication", "User");
             }
-
             return View();
-           
         }
 
         [HttpGet]
@@ -121,14 +118,14 @@ namespace BugTracker.Controllers
         [HttpGet]
         public ActionResult DetailsApplication(string _id_application)
         {
-            var dbApplications = context.Applications.Select(app => u.id_application == _id_application);
-            var applications = dbApplications.Select(a => new ApplicationViewModel
-            {
-                Caption = a.caption,
-                Annotation = a.annotation
-            });
+            //var dbApplications = context.Applications.Select(app => u.id_application == _id_application);
+            //var applications = dbApplications.Select(a => new ApplicationViewModel
+            //{
+            //    Caption = a.caption,
+            //    Annotation = a.annotation
+            //});applications
 
-            return View(applications);
+            return View();
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using BugTracker.Migrations;
 using BugTracker.Models.DBClasses;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace BugTracker.Models
 {

@@ -28,6 +28,7 @@ namespace BugTracker.Models.DBClasses
 
 
         public virtual List<Tasks> Tasks { get; set; }
+        public virtual ApplicationUser us { get; set; }
 
     }
 }

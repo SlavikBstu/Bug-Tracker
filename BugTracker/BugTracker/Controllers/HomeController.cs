@@ -14,20 +14,10 @@ namespace BugTracker.Controllers
             {
                 return RedirectToAction("Admin", "Account");
             }
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            if (User.IsInRole("user"))
+            {
+                return RedirectToAction("ListApplication", "User");
+            }
             return View();
         }
     }

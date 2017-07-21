@@ -60,6 +60,7 @@ namespace BugTracker.Controllers
         public ActionResult Admin()
         {
             var dbUsers = context.Users.ToList();
+            dbUsers.Remove(dbUsers.Where(u => u.Email == "admin@mail.ru").First());
             var s = UserManager.GetRoles(dbUsers.First().Id).ToList().First().ToString();
             var users = dbUsers.Select(u => new UserViewModel {
                 Id = u.Id,

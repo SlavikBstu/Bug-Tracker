@@ -60,18 +60,19 @@ namespace BugTracker.Controllers
         public ActionResult Admin()
         {
             var dbUsers = context.Users.ToList();
+            var s = UserManager.GetRoles(dbUsers.First().Id).ToList().First().ToString();
             var users = dbUsers.Select(u => new UserViewModel {
                 Id = u.Id,
                 Email = u.Email,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                Role = UserManager.GetRoles(u.Id).ToList().ToString()
+                Role = UserManager.GetRoles(u.Id).ToList().First().ToString()
             });
             return View(users);
         }
 
         [HttpPost]
-        public ActionResult Admin(string userId, string roleId)
+        public JsonResult Admin(string userId, string roleId)
         {
             var user = context.Users.Where(u => u.Id == userId).FirstOrDefault();
             if (user != null)
@@ -90,9 +91,9 @@ namespace BugTracker.Controllers
                         UserManager.AddToRole(userId, "user");
                         break;
                 }
-
+                return this.Json(new { Error = false });
             }
-            return null;
+            return this.Json(new { Error = true });
         }
 
         //

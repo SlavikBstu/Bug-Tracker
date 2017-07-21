@@ -148,3 +148,25 @@ span.status {
 option[disabled] {
   color: forestgreen;
 }
+textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+/** Styling input[type=file] **/
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  margin-right: 4px;
+}
+.btn-file input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transform: translate(-300px, 0) scale(4);
+  font-size: 23px;
+  direction: ltr;
+  cursor: pointer;
+}

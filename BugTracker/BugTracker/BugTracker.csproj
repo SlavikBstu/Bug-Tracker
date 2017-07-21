@@ -332,11 +332,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
-    <Content Include="Views\Manage\CreateClaim.cshtml" />
+    <Content Include="Views\User\CreateApplication.cshtml" />
+    <Content Include="Views\User\ListApplication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

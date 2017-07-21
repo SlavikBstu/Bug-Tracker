@@ -1,0 +1,30 @@
+﻿@using GridMvc.Html
+@using GridMvc.Sorting
+@using BugTracker.Models
+@model IEnumerable<BugTracker.Models.DBClasses.Application>
+
+@{
+    ViewBag.Title = "Список заявок";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-primary" style="margin-top: 70px;">
+    <div class="panel-heading  form-heading-text">
+        <i class="fa fa-th-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Список заявок
+    </div>
+
+@*@Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
+   {
+       columns.Add(user => user.Email).Titled("Электронная почта");
+       columns.Add(user => user.LastName)
+                                         .Titled("Пользователь")
+                                         .Sortable(true)
+                                         .Filterable(true)
+                                         .SortInitialDirection(GridSortDirection.Ascending)
+                                         .RenderValueAs(user => user.FirstName + " " + user.LastName);
+       columns.Add().Titled("Роль")
+                    .Encoded(false)
+                    .Sanitized(false)
+                    .RenderValueAs(user => CustomRenderingOfRole(user));
+   }).WithPaging(3)*@
+</div>

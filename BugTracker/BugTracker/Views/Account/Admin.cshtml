@@ -37,7 +37,7 @@
     <div class="panel-heading  form-heading-text">
         <i class="fa fa-list-alt fa-fw" aria-hidden="true"></i>
         &nbsp;&nbsp;Неразрешённые пользователи
-
+        <span id="state-label" class="label pull-right"></span>
     </div>
     @Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
    {
@@ -62,6 +62,8 @@
         <li role="presentation"><a href="GridView"><i class='fa fa-clock-o fa-2x' aria-hidden='true'></i><div>Необработанные заявки</div></a></li>
     </ul>
 </div>
+
+
 
 <a href="#" title="Наверх" class="scroll scrollup"></a>
 <a href="#" title="Вниз" class="scroll scrolldown"></a>

@@ -27,19 +27,52 @@ $(document).ready(function () {
             userId: $(this).attr("data-user-id"),
             roleId: $(this).val()
         };
-            jQuery.ajax("Admin", {
-                type: "POST",
-                dataType: "text",
-                data: data,
-                success: function (result) {
-                    alert(result);
-                    if ("True" == result) {
-                    }
-                }
+        jQuery.ajax("Admin", {
+            type: "POST",
+            dataType: "json",
+            data: data,
+            success: function (resultJson) {
+                var stateLabel = $("#state-label");
+                if (resultJson.Error)
+                    stateLabel.text("Ошибка при изменении роли")
+                        .addClass("label-danger").removeClass("label-success");
+                else
+                    stateLabel.text("Роль успешно изменена")
+                        .addClass("label-success").removeClass("label-danger");
+                var f = function (m) { alert(m); $(this).hide() };
+                stateLabel.show("fast", function () {
+                    var self = this;
+                    function f() { $(self).hide(); };
+                    setTimeout(f, 1000);
+                });
+                return;
+            }
         });
         e.stopPropagation();
     });
 
+    $('.btn-file').each(function () {
+        var self = this;
+        $('input[type=file]', this).change(function () {
+            // remove existing file info
+            $(self).next().remove();
+            // get value
+            var infoFiles = '';
+            //var value = $(this).val();
+            var inputFiles = this.files; // return object FileList
+            if (inputFiles.length > 1)
+                infoFiles = "Число файлов: " + inputFiles.length;
+            else
+                infoFiles = (inputFiles[0]).name;
+            // append file info
+            $('<span><i class="fa fa-file-image-o"></i> ' + infoFiles + '</span>').insertAfter(self);
+        });
+    });
+
+    //========================== selected row of right sidebar ======================================
+    var selectedRowLeftSidebar = $("#activeRowsidebar");
+    if (selectedRowLeftSidebar != null) 
+        $("#right-sidebar #rightSidebar_" + selectedRowLeftSidebar.val()).addClass("active");
 });
 
 

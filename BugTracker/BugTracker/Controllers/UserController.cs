@@ -51,12 +51,18 @@ namespace BugTracker.Controllers
         }
 
 
-        public ActionResult CreateClaim(BugTracker.Models.DBClasses.Application app)
+        public ActionResult CreateApplication(BugTracker.Models.DBClasses.Application app)
         {
             if (!ModelState.IsValid)
                 return View();
 
             //... 
+            return View();
+        }
+
+
+        public ActionResult ListApplication()
+        {
             return View();
         }
     }

@@ -12,7 +12,7 @@ using System.IO;
 namespace BugTracker.Controllers
 {
     [Authorize]
-    public class UserController : Controller
+    public class ApplicationController : Controller
     {
         private static List<string> imageMimeTypes = new List<string>()
         {
@@ -27,11 +27,11 @@ namespace BugTracker.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public UserController()
+        public ApplicationController()
         {
         }
 
-        public UserController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ApplicationController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -97,7 +97,7 @@ namespace BugTracker.Controllers
             {
                 context.Applications.Add(appl);
                 context.SaveChanges();
-                return RedirectToAction("ListApplication", "User");
+                return RedirectToAction("ListApplication", "Application");
             }
             return View();
         }

@@ -16,7 +16,7 @@ namespace BugTracker.Controllers
             }
             if (User.IsInRole("user"))
             {
-                return RedirectToAction("ListApplication", "User");
+                return RedirectToAction("ListApplication", "Application");
             }
             return View();
         }

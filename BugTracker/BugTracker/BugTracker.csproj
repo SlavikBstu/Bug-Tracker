@@ -210,7 +210,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -334,9 +334,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
-    <Content Include="Views\User\CreateApplication.cshtml" />
-    <Content Include="Views\User\ListApplication.cshtml" />
-    <Content Include="Views\User\DetailsApplication.cshtml" />
+    <Content Include="Views\Application\CreateApplication.cshtml" />
+    <Content Include="Views\Application\ListApplication.cshtml" />
+    <Content Include="Views\Application\DetailsApplication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicationImages\" />

@@ -14,6 +14,23 @@ namespace BugTracker.Models.DBClasses
         verified
     }
 
+    public enum types_enum
+    {
+        bug,
+        improvement,
+        new_feature,
+        task
+    }
+
+    public enum priorities_enum
+    {
+        blocker,
+        critical,
+        major,
+        minor,
+        trivial_cosmetic
+    }
+
     public class Application
     {
 
@@ -23,8 +40,8 @@ namespace BugTracker.Models.DBClasses
         public string us_id { get; set; }
         public status_enum status { get; set; }
         public string caption { get; set; }
-        public string type { get; set; }
-        public string priority { get; set; }
+        public types_enum type { get; set; }
+        public priorities_enum priority { get; set; }
         public string annotation { get; set; }
         public string picture { get; set; }
 

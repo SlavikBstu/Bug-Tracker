@@ -11,11 +11,11 @@ namespace BugTracker.Models
 
         [Required]
         [Display(Name = "Тип заявки")]
-        public string Type { get; set; }
+        public DBClasses.types_enum Type { get; set; }
 
         [Required]
         [Display(Name = "Приоритет заявки")]
-        public string Priority { get; set; }
+        public DBClasses.priorities_enum Priority { get; set; }
 
         [Required]
         [StringLength(500, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 10)]

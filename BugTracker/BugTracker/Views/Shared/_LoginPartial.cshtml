@@ -5,7 +5,7 @@
     {
     <li>
         <div style="margin-top: 9px;">
-            <a href="@Url.Content("~/User/CreateApplication")" class="btn btn-success" role="button">
+            <a href="@Url.Content("~/Application/CreateApplication")" class="btn btn-success" role="button">
                 <i class="fa fa-plus-square fa-fw" aria-hidden="true"></i>&nbsp;Новая заявка
             </a>
         </div>
@@ -25,24 +25,6 @@
             </ul>
         }
     </li>
-    if (!User.IsInRole("admin"))
-    {
-    <div class="right-sidebar moveHide" id="right-sidebar">
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" id="rightSidebar_2"><a href="@Url.Content("~/User/ListApplication")"><i class='fa fa-tasks fa-2x' aria-hidden='true'></i><div>Список заявок</div></a></li>
-            <li role="presentation" id="rightSidebar_3"><a href="@Url.Content("~/User/CreateApplication")"><i class='fa fa-plus-square fa-2x' aria-hidden='true'></i><div>Новая заявка</div></a></li>
-        </ul>
-    </div>
-    }
-    else
-    {
-        <div class="right-sidebar moveHide" id="right-sidebar">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" id="rightSidebar_1"><a href="#"><i class='fa fa-tasks fa-2x' aria-hidden='true'></i><div>Неразрешенные пользователи</div></a></li>
-                <li role="presentation" id="rightSidebar_2"><a href="#"><i class='fa fa-tasks fa-2x' aria-hidden='true'></i><div>Список заявок</div></a></li>
-            </ul>
-        </div>
-    }
 }
 else
 {

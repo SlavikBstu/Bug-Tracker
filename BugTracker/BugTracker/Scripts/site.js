@@ -73,6 +73,12 @@ $(document).ready(function () {
     var selectedRowLeftSidebar = $("#activeRowsidebar");
     if (selectedRowLeftSidebar != null) 
         $("#right-sidebar #rightSidebar_" + selectedRowLeftSidebar.val()).addClass("active");
+
+    //========================== bootstrap tooltip ==================================
+    $('body').tooltip({
+        selector: "[role='tooltip']",
+        placement: "bottom"
+    });
 });
 
 

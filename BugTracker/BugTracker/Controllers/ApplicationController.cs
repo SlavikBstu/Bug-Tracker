@@ -77,6 +77,8 @@ namespace BugTracker.Controllers
             appl.type = app.Type;
             appl.priority = app.Priority;
             appl.annotation = app.Annotation;
+            appl.created = DateTime.Now;
+            appl.updated = appl.created;
 
             string imgName = string.Empty, imgPath = imgName;
             foreach (var img in uploadImages)
@@ -108,10 +110,16 @@ namespace BugTracker.Controllers
             var dbApplications = context.Applications.ToList();
             var applications = dbApplications.Select(a => new ApplicationViewModel
             {
+                Id = a.id_application,
+                Type = a.type,
                 Caption = a.caption,
-                Annotation = a.annotation
+                Annotation = a.annotation,
+                Priority = a.priority,
+                Status = a.status,
+                Created = a.created,
+                Updated = a.updated
             });
-
+            ViewBag.currentPage = Request.QueryString["grid-page"];
             return View(applications);
         }
 

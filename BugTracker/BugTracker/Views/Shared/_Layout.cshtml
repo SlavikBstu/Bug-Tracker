@@ -7,7 +7,8 @@
     <title>@ViewBag.Title – Bug tracker</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/gridCss")
-
+    <link href="~/Content/gridmvc.datepicker.css" rel="stylesheet" />
+    <link href="~/Content/Styles/search.css" rel="stylesheet" />
 </head>
 <body style="height: 4000px;">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -59,6 +60,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/gridMvc")
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.ru.js"></script>
+    <script src="~/Scripts/bugTracker.gridmvc.js"></script>
+    <script src="~/Scripts/search.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/site.js")"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

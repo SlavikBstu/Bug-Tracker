@@ -76,8 +76,7 @@ $(document).ready(function () {
 
     //========================== bootstrap tooltip ==================================
     $('body').tooltip({
-        selector: "[role='tooltip']",
-        placement: "bottom"
+        selector: "[role='tooltip']"
     });
 });
 

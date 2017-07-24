@@ -10,8 +10,9 @@ namespace BugTracker.Models.DBClasses
     public enum status_enum
     {
         initial,
-        completed,
-        verified
+        in_progress,
+        resolved,
+        closed
     }
 
     public enum types_enum
@@ -44,7 +45,8 @@ namespace BugTracker.Models.DBClasses
         public priorities_enum priority { get; set; }
         public string annotation { get; set; }
         public string picture { get; set; }
-
+        public DateTime created { get; set; }
+        public DateTime updated { get; set; }
 
         public virtual List<Tasks> Tasks { get; set; }
         public virtual ApplicationUser us { get; set; }

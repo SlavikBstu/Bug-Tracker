@@ -17,7 +17,7 @@
                         <h4>Используйте локальную учетную запись для входа.</h4>
                         <hr />
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">                           
+                        <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
                                 <div class="input-group">
@@ -59,7 +59,7 @@
                     }
                 </section>
             </div>
-           
+
         </div>-->
 
 <div class="row">
@@ -77,18 +77,17 @@
                         </div>
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
-                                <div class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></div>
-                            </div>
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
+                            <div class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></div>
                         </div>
-                        <div class="form-group">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
-                                    @Html.LabelFor(m => m.RememberMe)
-                                </div>
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.RememberMe) Запомнить меня
+                            </label>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Войти в систему</button>
                 }

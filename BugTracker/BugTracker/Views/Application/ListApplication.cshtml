@@ -1,27 +1,147 @@
-﻿@using GridMvc.Html
+﻿@using GridMvc
+@using GridMvc.Html
 @using GridMvc.Sorting
+@using GridMvc.DataAnnotations
+@using GridMvc.Pagination
+@using GridMvc.Filtering
+@using GridMvc.Columns
 @using BugTracker.Models
+@using BugTracker.Models.DBClasses
 @model IEnumerable<ApplicationViewModel>
+
+
+@helper CustomRenderingOfType(types_enum type)
+{
+string icon = string.Empty, tooltip = icon;
+
+switch (type)
+{
+    case types_enum.bug: icon = "type-bug.svg"; tooltip = "Ошибка"; break;
+    case types_enum.improvement: icon = "type-improvment.svg"; tooltip = "Улучшение"; break;
+    case types_enum.new_feature: icon = "type-newFeature.svg"; tooltip = "Новая функция"; break;
+    case types_enum.task: icon = "type-task.svg"; tooltip = "Задача"; break;
+
+}
+    <img src= @string.Format("{0}/{1}", @Url.Content("~/Content/Images"), icon) title="@tooltip" class="img-responsive center-block" alt="Тип проблемы">
+}
+
+@helper CustomRenderingOfPriority(priorities_enum type)
+{
+string icon = string.Empty, tooltip = icon;
+
+switch (type)
+{
+    case priorities_enum.blocker: icon = "priority-blocker.svg"; tooltip = "Блокирующий"; break;
+    case priorities_enum.critical: icon = "priority-critical.svg"; tooltip = "Критический"; break;
+    case priorities_enum.major: icon = "priority-major.svg"; tooltip = "Значительный"; break;
+    case priorities_enum.minor: icon = "priority-minor.svg"; tooltip = "Незначительный"; break;
+    case priorities_enum.trivial_cosmetic: icon = "priority-cosmetic.svg"; tooltip = "Тривиально-косметический"; break;
+}
+    <img src=@string.Format("{0}/{1}", @Url.Content("~/Content/Images"), icon) title="@tooltip" class="img-responsive center-block" alt="Тип проблемы">
+}
+
+@helper CustomRenderingOfStatus(status_enum type)
+{
+string label_class = string.Empty, title = label_class, description = title;
+
+switch (type)
+{
+    case status_enum.initial: {
+            label_class = "label-default";
+            title = "Открыта";
+            description = string.Concat(title.ToUpper(), "<br>Проблема открыта, но пока не принята системой");
+            break;
+        }
+    case status_enum.in_progress: {
+            label_class = "label-warning";
+            title = "Выполняется";
+            description = string.Concat(title.ToUpper(), "<br>Проблема активно решается сотрудником");
+            break;
+        }
+    case status_enum.resolved: {
+            label_class = "label-success";
+            title = "Решена";
+            description = string.Concat(title.ToUpper(), "<br>Проблема решена");
+            break;
+        }
+    case status_enum.closed: {
+            label_class = "label-success";
+            title = "Закрыта";
+            description = string.Concat(title.ToUpper(), "<br>Проблема считается завершенной, когда решение верно. Проблемы, которые не закрыты, могут быть вновь открыты");
+            break;
+        }
+}
+    <span class="label @label_class center-block btn-lg h4" style="font-size: 80%; padding: 5px 7px;" data-placement="left" role="tooltip" data-toggle="tooltip" data-html="true" title="@description">@title</span>
+}
+
 
 @{
     ViewBag.Title = "Список заявок";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var pageSize = 5;
+    var gridPager = new GridMvc.Pagination.GridPager();
+    var htmlDisplayRange = new MvcHtmlString(gridPager.DisplayRangePages<ApplicationViewModel>(Model, (string)@ViewBag.currentPage, @pageSize));
 }
-<input type="hidden" id="activeRowsidebar" value="2" />
-<div class="panel panel-primary" style="margin-top: 70px;">
-    <div class="panel-heading  form-heading-text">
-        <i class="fa fa-th-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Список заявок
-    </div>
 
-@Html.Grid(Model).Named("forbiddenUsers").Columns(columns =>
-   {
-       columns.Add(application => application.Caption).Titled("Тема");
-       columns.Add(application => application.Annotation)
-                                         .Titled("Комментарий пользователя")
-                                         .Sortable(true)
-                                         .Filterable(true)
-                                         .SortInitialDirection(GridSortDirection.Ascending);
-                                        // .RenderValueAs(user => application);
-       //columns.Add(application => application.Type).Titled("Тип");
-   }).WithPaging(3)
-</div>
+@using (Html.BeginForm("DetailsApplication", "Application", FormMethod.Post, new { id = "detailsApplicationForm", style = "display:none;" }))
+{
+    <input type="text" id="idApplication" name="idApplication" value=""/>
+}
+
+        <input type="hidden" id="activeRowsidebar" value="2" />
+        <div class="panel panel-primary" style="margin-top: 70px;">
+            <div class="panel-heading  form-heading-text">
+                <i class="fa fa-th-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Список заявок&nbsp;&nbsp;
+                @htmlDisplayRange
+            </div>
+            <div class="panel-body" style="background-color: #5cb85c;">
+                <div class="dropdown pull-left">
+                    <button id="exportDropdown" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Экспорт
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                        <li>
+                            <a href="#">XML</a>
+                        </li>
+                        <li>
+                            <a href="#">PDF</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container-search">
+                    <form class="searchbox">
+                        <input type="search" placeholder="Введите запрос..." name="search" class="searchbox-input" onkeyup="buttonUp();" required>
+                        <input type="submit" class="searchbox-submit" value="ОК">
+                        <span class="searchbox-icon"><i class="fa fa-search"></i></span>
+                    </form>
+                </div>
+            </div>
+
+@Html.Grid(Model).Named("listApplications").Columns(columns =>
+{
+    columns.Add(application => application.Id, true);
+    //.SetFilterWidgetType("CustomTypesProblemFilterWidget"); ;
+    columns.Add(application => application.Type)
+                                        .Titled("Тип")
+                                        .RenderValueAs(application => CustomRenderingOfType(application.Type))
+                                        .Encoded(false)
+                                        .Sanitized(false)
+                                        .SetWidth("5%");
+    columns.Add(application => application.Caption).Titled("Тема").Filterable(true);
+    columns.Add(application => application.Priority)
+                                      .Titled("Приоритет")
+                                      .SortInitialDirection(GridSortDirection.Ascending)
+                                      .Encoded(false)
+                                      .Sanitized(false)
+                                      .RenderValueAs(application => CustomRenderingOfPriority(application.Priority))
+                                      .SetWidth("7%");
+    columns.Add(application => application.Status)
+                                      .Titled("Статус")
+                                      .Encoded(false)
+                                      .Sanitized(false)
+                                      .RenderValueAs(application => CustomRenderingOfStatus(application.Status)).SetWidth("5%").Css("hidden-xs");
+    columns.Add(application => application.Created).Titled("Добавлена").Format("{0:dd/MM/yyyy}").SetWidth("10%").Css("hidden-xs").Filterable(true);
+    columns.Add(application => application.Updated).Titled("Обновлена").Format("{0:dd/MM/yyyy}").SetWidth("10%").Css("hidden-xs hidden-sm").Filterable(true);
+}).WithPaging(pageSize).SetLanguage("ru").Sortable(true)
+        </div>
